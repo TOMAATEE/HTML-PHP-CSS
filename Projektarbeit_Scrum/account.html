@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register & Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container" id="signup" style="display:none;">
+      <h1 class="form-title">Registrieren</h1>
+      <form method="post" action="scripts/register_login.php">
+        <div class="input-group">
+          <label for="anrede">Anrede</label>
+          <select name="anrede" style="position: relative; left: -2.4rem; width: 50%;">
+            <option value="D"></option>
+            <option value="M">Herr</option>
+            <option value="W">Frau</option>
+          </select>
+        </div>
+        <br>
+        <div class="input-group">
+           <i class="fas fa-user"></i>
+           <input type="text" name="vorname" id="vorname" placeholder="Vorname">
+           <label for="vorname">Vorname</label>
+        </div>
+        <div class="input-group">
+            <i class="fas fa-user"></i>
+            <input type="text" name="nachname" id="nachname" placeholder="Nachname">
+            <label for="nachname">Nachname</label>
+        </div>
+        <div class="input-group">
+            <i class="fas fa-envelope"></i>
+            <input type="email" name="email" id="email" placeholder="E-Mail" required>
+            <label for="email">E-Mail*</label>
+        </div>
+        <div class="input-group">
+            <i class="fas fa-lock"></i>
+            <input type="password" name="password" id="password" placeholder="Passwort" required>
+            <label for="password">Passwort*</label>
+        </div>
+        <div class="input-group">
+            <i class="fas fa-lock"></i>
+            <input type="password" name="password2" id="password2" placeholder="Passwort wiederholen" required>
+            <label for="password2">Passwort wiederholen*</label>
+        </div>
+        <div class="input-group">
+            <input type="checkbox" id="agb" required>
+            <label style="top: -1.2rem; left: 0;" for="agb">Ich akzeptiere die <a href="AGB.php" target="blank">AGB</a></label>
+        </div>
+       <input type="submit" class="btn" value="Registrieren" name="signUp">
+      </form>
+      <p class="or">
+        ---------or---------
+      </p>
+      <div class="icons">
+      <a href="https://www.google.com/"> <i class="fab fa-google"></i></a>
+      <a href="https://www.facebook.com/login.php/"><i class="fab fa-facebook"></i></a>
+      </div>
+      <div class="links">
+        <p>Haben Sie schon einen Account?</p>
+        <button id="signInButton">Einloggen</button>
+      </div>
+    </div>
+
+    <div class="container" id="signIn">
+        <h1 class="form-title">Login</h1>
+        <form method="post" action="scripts/register_login.php">
+          <div class="input-group">
+              <i class="fas fa-envelope"></i>
+              <input type="email" name="email" id="email" placeholder="E-Mail" required>
+              <label for="email">E-Mail</label>
+          </div>
+          <div class="input-group">
+              <i class="fas fa-lock"></i>
+              <input type="password" name="password" id="password" placeholder="Passwort" required>
+              <label for="password">Password</label>
+          </div>
+          <p class="recover">
+            <a href="#">Passwort wiederherstellen</a>
+          </p>
+         <input type="submit" class="btn" value="Sign In" name="signIn">
+        </form>
+        <p class="or">
+          ---------or---------
+        </p>
+        <div class="icons">
+          <a href="https://www.google.com/"> <i class="fab fa-google"></i></a>
+          <a href="https://www.facebook.com/login.php/"><i class="fab fa-facebook"></i></a>
+        </div>
+        <div class="links">
+          <p>Haben Sie noch keinen Account?</p>
+          <button id="signUpButton">Account erstellen</button>
+        </div>
+      </div>
+      <script src="scripts/account.js"></script>
+</body>
+</html>
