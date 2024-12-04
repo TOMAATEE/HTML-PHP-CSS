@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do Liste</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+    <h1>To-Do Liste</h1>
+    <div class="top-bar">
+        <form id="todo-form">
+            <input type="text" id="todo-input" placeholder="Neue Aufgabe hinzufügen..." required>
+        </form>
+        <nav>
+            <form action="erledigt.html">
+                <button type="submit">Erledigte Aufgaben anzeigen</button>
+            </form>
+        </nav>
+        <nav>
+            <form action="scripts/logout.php">
+                <button type="submit" style="background-color: #c0392b;">Logout</button>
+            </form>
+        </nav>
+    </div>
+    <ul id="todo-list"></ul>
+
+    <script src="scripts/todo.js"></script>
+</body>
+</html>
