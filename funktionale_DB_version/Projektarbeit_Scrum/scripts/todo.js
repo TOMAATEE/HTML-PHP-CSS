@@ -43,12 +43,15 @@ todoInput.addEventListener('keydown', function(event) {
 
 // Funktion: To-Do zur Liste hinzufügen
 function addTodoItem(todo) {
+    if (todo.erledigt == 1) {
+        return;
+    }
     const li = document.createElement('li');
     const itemWrapper = document.createElement('div');
     itemWrapper.classList.add('todo-item-wrapper');
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
-    checkbox.checked = todo.erledigt == 1 ? true : false;
+    checkbox.checked = false;
 
     const prio_label = document.createElement('span');
     prio_label.textContent = todo.priority;
@@ -91,7 +94,6 @@ function addTodoItem(todo) {
     });
 
     checkbox.addEventListener('change', function() {
-        todoInput.value = checkbox.checked;
         fetch(`/Projektarbeit_Scrum/scripts/todos.php/${todo.id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
