@@ -17,12 +17,12 @@ $requestedId = end($uriParts); // Letzter Teil der URL ist die ID
 if (!is_numeric($requestedId)) {
     $requestedId = null; // Keine ID vorhanden
 }
-
+$id = intval($_SESSION["user_id"]);
 // API-Logik
 $method = $_SERVER['REQUEST_METHOD'];
 switch ($method) {
     case 'GET': // To-Dos abrufen
-        $result = $mysqli->query("SELECT * FROM todo");
+        $result = $mysqli->query("SELECT * FROM todo WHERE user_id=$id");
         $todos = [];
         while ($row = $result->fetch_assoc()) {
             $todos[] = $row;
@@ -38,9 +38,10 @@ switch ($method) {
             exit;
         }
         $beschreibung = $mysqli->real_escape_string($input['beschreibung']);
-        $priority = $mysqli->real_escape_string($input['priority'] ?? 1);
-        $mysqli->query("INSERT INTO todo (beschreibung, erledigt, priority) VALUES ('$beschreibung', 0, $priority)");
-        echo json_encode(["id" => $mysqli->insert_id, "beschreibung" => $beschreibung, "erledigt" => 0, "priority" => $priority]);
+        $priority = intval($input['priority']);
+        $result = $mysqli->query("INSERT INTO todo (beschreibung, erledigt, priority, user_id) VALUES ('$beschreibung', 0, $priority, $id)");
+        //echo json_encode(["error" => $mysqli->error]);
+        echo json_encode(["id" => $mysqli->insert_id, "beschreibung" => $beschreibung, "erledigt" => 0, "priority" => $priority, "user_id" => $id]);
         break;
 
     case 'PUT': // To-Do aktualisieren
@@ -56,7 +57,7 @@ switch ($method) {
             $fields[] = "beschreibung='$beschreibung'";
         }
         if (isset($input['erledigt'])) {
-            $erledigt = $input['erledigt'] ? 1 : 0;
+            $erledigt = $input['erledigt'] ? 0 : 1;
             $fields[] = "erledigt=$erledigt";
         }
         if ($fields) {

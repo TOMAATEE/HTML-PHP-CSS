@@ -1,11 +1,13 @@
 const todoForm = document.getElementById('todo-form');
 const todoInput = document.getElementById('todo-input');
 const todoList = document.getElementById('todo-list');
+const priority = document.getElementById('priority');
 
 // Lade gespeicherte To-Dos aus der Datenbank
 fetch('/Projektarbeit_Scrum/scripts/todos.php', { method: 'GET' }) // Abrufen aller To-Dos
     .then(response => response.json())
     .then(todos => {
+        todos.sort(function(a, b){return a.priority - b.priority});
         todos.forEach(addTodoItem); // Existierende To-Dos zur Liste hinzufügen
     })
     .catch(error => console.error('Fehler beim Laden der To-Dos:', error));
@@ -20,7 +22,7 @@ todoForm.addEventListener('submit', function(event) {
         fetch('/Projektarbeit_Scrum/scripts/todos.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ beschreibung: taskText, erledigt: false, priority: 1 }) // Beispielwerte
+            body: JSON.stringify({beschreibung: taskText, erledigt: false, priority: priority.value.trim(), user_id: 0})
         })
         .then(response => response.json())
         .then(newTodo => {
@@ -42,9 +44,15 @@ todoInput.addEventListener('keydown', function(event) {
 // Funktion: To-Do zur Liste hinzufügen
 function addTodoItem(todo) {
     const li = document.createElement('li');
+    const itemWrapper = document.createElement('div');
+    itemWrapper.classList.add('todo-item-wrapper');
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
-    checkbox.checked = todo.erledigt;
+    checkbox.checked = todo.erledigt == 1 ? true : false;
+
+    const prio_label = document.createElement('span');
+    prio_label.textContent = todo.priority;
+    prio_label.classList.add('prio-label');
 
     const label = document.createElement('span');
     label.textContent = todo.beschreibung;
@@ -83,10 +91,11 @@ function addTodoItem(todo) {
     });
 
     checkbox.addEventListener('change', function() {
+        todoInput.value = checkbox.checked;
         fetch(`/Projektarbeit_Scrum/scripts/todos.php/${todo.id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ erledigt: checkbox.checked })
+            body: JSON.stringify({ erledigt: checkbox.checked ? 0 : 1 })
         })
         .catch(error => console.error('Fehler beim Aktualisieren des Status:', error));
     });
@@ -94,7 +103,9 @@ function addTodoItem(todo) {
     actions.appendChild(editButton);
     actions.appendChild(deleteButton);
 
-    li.appendChild(checkbox);
+    itemWrapper.appendChild(checkbox);
+    itemWrapper.appendChild(prio_label);
+    li.appendChild(itemWrapper);
     li.appendChild(label);
     li.appendChild(actions);
     todoList.appendChild(li);

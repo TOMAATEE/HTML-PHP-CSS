@@ -42,9 +42,6 @@ try {
         );
     ";
     $pdo->exec($createTodoTableSQL);
-
-    echo "Datenbank und Tabellen wurden erfolgreich erstellt.";
 } catch (PDOException $e) {
     exit("Fehler: " . $e->getMessage());
 }
-?>

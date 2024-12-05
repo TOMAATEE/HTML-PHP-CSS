@@ -33,6 +33,7 @@ ul li {
     background-color: #c0392b;
 }
 nav {
+    gap: 20px;
     display: flex;
     justify-content: center;
     margin-top: 20px;
